@@ -657,8 +657,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 4.8
-  jumpForce: 5
   groundCheck: {fileID: 837991927}
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
+  jumpForce: 5
 --- !u!136 &1222460885
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1313,6 +1316,10 @@ PrefabInstance:
     - target: {fileID: 5226597165651860311, guid: 1065ada083fc1e944b5ff4caf4009899, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226597165651860311, guid: 1065ada083fc1e944b5ff4caf4009899, type: 3}
+      propertyPath: ground.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 5226597165651860311, guid: 1065ada083fc1e944b5ff4caf4009899, type: 3}
       propertyPath: movementSpeed

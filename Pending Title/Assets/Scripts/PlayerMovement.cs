@@ -1,37 +1,42 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using CommandFile;
-using InputHandlerFile;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private List<Command> commands;
-    [SerializeField] private GameObject player;
-    private InputHandler inputHandler;
+    private Rigidbody rb;
+    private float verticalMovement;
+    private float horizontalMovement;
     [SerializeField] private float movementSpeed;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask ground;
+    [SerializeField] private float jumpForce;
+    
 
     private void Start()
     {
-        inputHandler = new InputHandler();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        commands = inputHandler.handleInput();
-        
-        if(commands.Count != 0)
-        {
-            foreach(Command command in commands)
-            {
-                command.execute(player);
-                player.GetComponent<Rigidbody>().velocity = player.GetComponent<Rigidbody>().velocity.normalized;
-                player.GetComponent<Rigidbody>().velocity *= movementSpeed;
-            }
-        }
+        verticalMovement = Input.GetAxis("Vertical");
+        horizontalMovement = Input.GetAxis("Horizontal");
+        Vector3 velocity = (Camera.main.transform.forward * verticalMovement) + (Camera.main.transform.right * horizontalMovement);
+        velocity.y = 0;
+        velocity = velocity.normalized;
+        velocity *= movementSpeed;
+        velocity.y = rb.velocity.y;
+        rb.velocity = velocity;
 
-        else
+        if (Input.GetButtonDown("Jump") && isGrounded())
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         }
+    }
+
+    private bool isGrounded()
+    {
+        return Physics.CheckSphere(groundCheck.position, .1f, ground);
     }
 }
