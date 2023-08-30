@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WaypointMovement : MonoBehaviour
@@ -8,7 +6,7 @@ public class WaypointMovement : MonoBehaviour
     private int currentIndex = 0;
     [SerializeField] private float speed;
 
-    void Update()
+    private void FixedUpdate()
     {
         if(Vector3.Distance(transform.position, waypoints[currentIndex].transform.position) < .05f)
         {

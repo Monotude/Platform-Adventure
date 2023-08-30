@@ -3,6 +3,7 @@ using UnityEngine;
 public class MouseMovement : MonoBehaviour
 {
     private float mouseMovement;
+    [SerializeField] private float mouseSensitivity;
 
     void Awake()
     {
@@ -12,7 +13,7 @@ public class MouseMovement : MonoBehaviour
 
     void Update()
     { 
-        mouseMovement = (Input.GetAxis("Mouse X") * 0.5f + mouseMovement) % 360;
+        mouseMovement = (Input.GetAxis("Mouse X") * mouseSensitivity + mouseMovement) % 360;
         transform.localRotation = Quaternion.Euler(-90, 270, mouseMovement);
     }
 }
