@@ -11,7 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float jumpForce;
-    
+    [SerializeField] private AudioSource jumpSound;
+
+    public float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
 
     private void Start()
     {
@@ -25,14 +27,20 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = (Camera.main.transform.forward * verticalMovement) + (Camera.main.transform.right * horizontalMovement);
         velocity.y = 0;
         velocity = velocity.normalized;
-        velocity *= movementSpeed;
+        velocity *= MovementSpeed;
         velocity.y = rb.velocity.y;
         rb.velocity = velocity;
 
         if (Input.GetButtonDown("Jump") && isGrounded())
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            jump();
         }
+    }
+
+    private void jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+        jumpSound.Play();
     }
 
     private bool isGrounded()
