@@ -7,13 +7,13 @@ public class MouseMovement : MonoBehaviour
 
     void Awake()
     {
-        mouseMovement = 0;
+        mouseMovement = 270;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     { 
         mouseMovement = (Input.GetAxis("Mouse X") * mouseSensitivity + mouseMovement) % 360;
-        transform.localRotation = Quaternion.Euler(-90, 270, mouseMovement);
+        transform.localRotation = Quaternion.Euler(0, mouseMovement, 0);
     }
 }
